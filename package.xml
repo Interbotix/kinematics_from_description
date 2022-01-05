@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>kinematics_from_description</name>
+  <version>0.0.1</version>
+  <description>This package contains a simple Python program that calculates properties required to run parts of the <a href="https://github.com/NxRLab/ModernRobotics">Modern Robotics Library</a> from a robot's robot_description parameter.</description>
+
+  <license>BSD</license>
+
+  <author email="luke@trossenrobotics.com">Luke Schmitt</author>
+  <maintainer email="trsupport@trossenrobotics.com">Luke Schmitt</maintainer>
+
+  <url type="website">https://github.com/LSinterbotix/kinematics_from_description</url>
+  <url type="bugtracker">https://github.com/LSinterbotix/kinematics_from_description/issues</url>
+  <url type="repository">https://github.com/LSinterbotix/kinematics_from_description</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>python3-setuptools</buildtool_depend>
+
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-scipy</exec_depend>
+  <exec_depend>python3-pyyaml</exec_depend>
+
+  <build_depend>rostest</build_depend>
+
+</package>

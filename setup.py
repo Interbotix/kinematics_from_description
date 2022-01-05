@@ -1,0 +1,19 @@
+from setuptools import setup
+from catkin_pkg.python_setup import generate_distutils_setup
+
+d = generate_distutils_setup(
+    packages=['kinematics_from_description'],
+    package_dir={'': 'src'},
+    scripts=['scripts/mr_desc_param.py'],
+    classifiers=[
+        "Intended Audience :: Education",
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: BSD License",
+        "Natural Language :: English",
+        "Programming Language :: Python :: 3",
+        "Topic :: Education",
+        "Topic :: Scientific/Engineering"],
+    requires=['numpy', 'scipy', 'urdf_parser_py','pyyaml']
+)
+
+setup(**d)
