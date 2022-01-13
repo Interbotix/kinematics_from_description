@@ -2,7 +2,7 @@
 
 ## Overview
 
-This package contains a simple Python program that calculates some properties required to run parts of the [Modern Robotics Library](https://github.com/NxRLab/ModernRobotics) from a robot's URDF or robot_description parameter. Specifically, this program calculates the M and Slist parameters required by the MR [IKinSpace](https://github.com/NxRLab/ModernRobotics/blob/4a3d25ae0a64d6c9c65d78345452155e400efa8e/packages/Python/modern_robotics/core.py#L763) function:
+This package contains a simple Python program that calculates some properties required to run parts of the [Modern Robotics Library](https://github.com/NxRLab/ModernRobotics) from a robot's URDF or robot_description parameter. Specifically, this program calculates the M and Slist parameters required by the MR inverse kinematics functions:
 
 - The **M** matrix is the position and orientation of the end effector frame when the robot is in its home position (i.e. all joints are at position 0).
 - The **Slist** matrix is the joint screw axes in the end effector frame when the robot is in its home position. This matrix is formatted to have each axis as a column.
@@ -18,7 +18,7 @@ The dependencies of this software package are:
 
 You can use rosdep or the setup file to install the required dependencies.
 
-Note that this package is only compatible with Python3.
+Note that this package is only compatible with  ROS Noetic and Python3.
 
 ## Usage
 
