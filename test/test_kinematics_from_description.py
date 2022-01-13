@@ -5,9 +5,10 @@ import unittest
 import numpy as np
 
 from kinematics_from_description.kfd import KinematicsFromDescriptionTool as KFD
-PKG = 'kinematics_from_description'
 
-test_robot_urdf = '''<?xml version="1.0" ?>
+PKG = "kinematics_from_description"
+
+test_robot_urdf = """<?xml version="1.0" ?>
 <robot name="test_robot">
   <link name="test_robot/base_link">
     <inertial>
@@ -158,59 +159,64 @@ test_robot_urdf = '''<?xml version="1.0" ?>
       <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
-</robot>'''
+</robot>"""
 
-Slist = np.array([[0.0, 0.0, 1.0,  0.0,    0.0, 0.0],
-                  [0.0, 1.0, 0.0, -0.0931, 0.0, 0.0],
-                  [0.0, 1.0, 0.0, -0.1931, 0.0, 0.035],
-                  [0.0, 1.0, 0.0, -0.1931, 0.0, 0.135]]).T
+Slist = np.array(
+    [
+        [0.0, 0.0, 1.0, 0.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0, -0.0931, 0.0, 0.0],
+        [0.0, 1.0, 0.0, -0.1931, 0.0, 0.035],
+        [0.0, 1.0, 0.0, -0.1931, 0.0, 0.135],
+    ]
+).T
 
-M = np.array([[1.0, 0.0, 0.0, 0.248575],
-              [0.0, 1.0, 0.0, 0.0],
-              [0.0, 0.0, 1.0, 0.1931],
-              [0.0, 0.0, 0.0, 1.0]])
+M = np.array(
+    [
+        [1.0, 0.0, 0.0, 0.248575],
+        [0.0, 1.0, 0.0, 0.0],
+        [0.0, 0.0, 1.0, 0.1931],
+        [0.0, 0.0, 0.0, 1.0],
+    ]
+)
 
 
 class TestKFD(unittest.TestCase):
-
     def test_find_description_xml(self):
-        tool = KFD(
-            body_frame='',
-            space_frame='',
-            robot_namespace='')
+        tool = KFD(body_frame="", space_frame="", robot_namespace="")
         tool.load_desc_from_xml_string(
-            '''<?xml version="1.0"?><robot name="test_robot"></robot>''')
-        self.assertEqual(tool.robot.name, 'test_robot')
+            """<?xml version="1.0"?><robot name="test_robot"></robot>"""
+        )
+        self.assertEqual(tool.robot.name, "test_robot")
 
     def test_find_description_file(self):
         filepath = os.path.dirname(os.path.abspath(__file__))
-        tool = KFD(
-            body_frame='',
-            space_frame='',
-            robot_namespace='')
-        tool.load_desc_from_file(f"{filepath}/test_robot.urdf")
-        self.assertEqual(tool.robot.name, 'test_robot')
+        tool = KFD(body_frame="", space_frame="", robot_namespace="")
+        tool.load_desc_from_file("%s/test_robot.urdf" % filepath)
+        self.assertEqual(tool.robot.name, "test_robot")
 
     def test_calc_M(self):
         tool = KFD(
-            body_frame='ee_gripper_link',
-            space_frame='base_link',
-            robot_namespace='test_robot')
+            body_frame="ee_gripper_link",
+            space_frame="base_link",
+            robot_namespace="test_robot",
+        )
         tool.load_desc_from_xml_string(test_robot_urdf)
         tool.run()
         self.assertTrue(np.allclose(tool.get_M(), M))
 
     def test_calc_Slist(self):
         tool = KFD(
-            body_frame='ee_gripper_link',
-            space_frame='base_link',
-            robot_namespace='test_robot')
+            body_frame="ee_gripper_link",
+            space_frame="base_link",
+            robot_namespace="test_robot",
+        )
         tool.load_desc_from_xml_string(test_robot_urdf)
         tool.run()
         self.assertTrue(np.allclose(tool.get_Slist(transposed=True), Slist))
         self.assertTrue(np.allclose(tool.get_Slist(), Slist.T))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import rostest
-    rostest.rosrun(PKG, 'test_kfd', TestKFD)
+
+    rostest.rosrun(PKG, "test_kfd", TestKFD)
