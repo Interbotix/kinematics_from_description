@@ -1,4 +1,4 @@
-# Kinematics from Robot Description
+# Kinematics from Robot Description ![CI Status](https://github.com/Interbotix/kinematics_from_description/actions/workflows/ci.yaml/badge.svg)
 
 ## Overview
 
