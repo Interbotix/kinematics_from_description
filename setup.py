@@ -4,7 +4,7 @@ from catkin_pkg.python_setup import generate_distutils_setup
 d = generate_distutils_setup(
     packages=["kinematics_from_description"],
     package_dir={"": "src"},
-    scripts=["scripts/mr_desc_param.py"],
+    scripts=["scripts/mr_desc_param"],
     classifiers=[
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
@@ -14,7 +14,7 @@ d = generate_distutils_setup(
         "Topic :: Education",
         "Topic :: Scientific/Engineering",
     ],
-    install_requires=["numpy", "scipy>=1.4.0", "urdf_parser_py", "pyyaml"],
+    install_requires=["numpy", "scipy>=1.2.0", "urdf_parser_py", "pyyaml"],
 )
 
 setup(**d)

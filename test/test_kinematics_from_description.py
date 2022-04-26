@@ -182,7 +182,7 @@ M = np.array(
 
 class TestKFD(unittest.TestCase):
     def test_find_description_xml(self):
-        tool = KFD(body_frame="", space_frame="", robot_namespace="")
+        tool = KFD({"body_frame": "", "space_frame": "", "namespace": ""})
         tool.load_desc_from_xml_string(
             """<?xml version="1.0"?><robot name="test_robot"></robot>"""
         )
@@ -190,15 +190,17 @@ class TestKFD(unittest.TestCase):
 
     def test_find_description_file(self):
         filepath = os.path.dirname(os.path.abspath(__file__))
-        tool = KFD(body_frame="", space_frame="", robot_namespace="")
-        tool.load_desc_from_file("%s/test_robot.urdf" % filepath)
+        tool = KFD({"body_frame": "", "space_frame": "", "namespace": ""})
+        tool.load_desc_from_file(os.path.join(filepath, "test_robot.urdf"))
         self.assertEqual(tool.robot.name, "test_robot")
 
     def test_calc_M(self):
         tool = KFD(
-            body_frame="ee_gripper_link",
-            space_frame="base_link",
-            robot_namespace="test_robot",
+            {
+                "body_frame": "ee_gripper_link",
+                "space_frame": "base_link",
+                "namespace": "test_robot",
+            }
         )
         tool.load_desc_from_xml_string(test_robot_urdf)
         tool.run()
@@ -206,9 +208,11 @@ class TestKFD(unittest.TestCase):
 
     def test_calc_Slist(self):
         tool = KFD(
-            body_frame="ee_gripper_link",
-            space_frame="base_link",
-            robot_namespace="test_robot",
+            {
+                "body_frame": "ee_gripper_link",
+                "space_frame": "base_link",
+                "namespace": "test_robot",
+            }
         )
         tool.load_desc_from_xml_string(test_robot_urdf)
         tool.run()
