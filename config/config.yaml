@@ -1,4 +1,12 @@
+# The namespace under which the `/robot_description` rosparam will be found, as well as
+# the names of each link (i.e. `/namespace/robot_description`, and `namespace/base_link`).
 namespace: ''
+
+# The name given to the link that will serve as the location of the robot's base, or {0} link.
 space_frame: ''
+
+# The name given to the link that will serve as the location of the end effector.
 body_frame: ''
+
+# The precision with which to print the kinematic properties.
 precision: 6

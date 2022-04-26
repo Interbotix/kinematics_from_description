@@ -1,0 +1,116 @@
+#!/usr/bin/env python
+
+import argparse
+import yaml
+import os
+import numpy as np
+import rospkg
+from kinematics_from_description.kfd import KinematicsFromDescriptionTool as KFD
+
+PKG = 'kinematics_from_description'
+
+def main(args):
+    if args.file is not None:
+        filepath = os.path.join(
+            rospkg.RosPack().get_path(PKG),
+            'config',
+            'config.yaml'
+        )
+        print("Loading configs from '%s'" % filepath)
+        try:
+            with open(filepath) as config_file:
+                config = yaml.safe_load(config_file)
+        except yaml.YAMLError as e:
+            print(e)
+            exit(1)
+    elif args.space_frame is not None and args.body_frame is not None:
+        config={}
+        config['space_frame']=args.space_frame
+        config['body_frame']=args.body_frame
+        config['namespace']=args.namespace
+        config['precision']=args.precision
+    else:
+        raise ValueError(
+            'Either a file must be specified or the space and body frames must be specified.'
+            'Use the --help flag for details.'
+        )
+
+    np.set_printoptions(precision=int(config["precision"]), suppress=True)
+
+    print('Using configs:')
+    print('\tspace_frame: %s' % config['space_frame'])
+    print('\tbody_frame:  %s' % config['body_frame'])
+    print('\tnamespace:   %s' % config['namespace'])
+    print('\tprecision:   %i' % config['precision'])
+
+    tool = KFD(config)
+
+    tool.load_desc_from_param()
+    tool.run()
+
+    print('\nThe MR Descriptions are as follows:')
+
+    print("\nM:")
+    print(repr(tool.get_M()))
+
+    print("\nSlist:")
+    print(str(repr(tool.get_Slist(transposed=False))) + ".T\n")
+
+    print(
+        (
+            'Paste these arrays into your mr_descriptions.py file to use in the Interbotix '
+            'Python-ROS API.'
+        )
+    )
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description=(
+            "A program that will parse a robot's kinematic properties from its "
+            '`/robot_description` rosparam.'
+        )
+    )
+    parser.add_argument(
+        '--file',
+        '-f',
+        type=str,
+        help='The path to the config file to use.',
+    )
+    parser.add_argument(
+        '--space_frame',
+        '-s',
+        type=str,
+        help=(
+            "The name given to the link that will serve as the location of the robot's base, or "
+            "{0} link. This is typically `base_link`."
+        ),
+    )
+    parser.add_argument(
+        '--body_frame',
+        '-b',
+        type=str,
+        help=(
+            'The name given to the link that will serve as the location of the end effector. This'
+            ' is typically `ee_gripper_link`.'
+        ),
+    )
+    parser.add_argument(
+        '--namespace',
+        '-n',
+        type=str,
+        default='',
+        help=(
+            'The namespace under which the `/robot_description` rosparam will be found, as well as'
+            ' the names of each link (i.e. `/namespace/robot_description`, and '
+            '`namespace/base_link`. (default: %(default)s)'
+        ),
+    )
+    parser.add_argument(
+        '--precision',
+        '-p',
+        type=int,
+        help='The precision with which to print the kinematic properties. (default: %(default)s)',
+        default=6,
+    )
+    main(args=parser.parse_args())

@@ -9,11 +9,11 @@ for using the ModernRobotics Library. https://github.com/NxRLab/ModernRobotics
 """
 
 
-class KinematicsFromDescriptionTool:
-    def __init__(self, body_frame, space_frame, robot_namespace=""):
-        self.body_frame_name = body_frame
-        self.space_frame_name = space_frame
-        self.robot_namespace = robot_namespace
+class KinematicsFromDescriptionTool(object):
+    def __init__(self, configs):
+        self.body_frame_name = configs["body_frame"]
+        self.space_frame_name = configs["space_frame"]
+        self.robot_namespace = configs.get("namespace")
 
     def load_desc_from_param(self):
         """
@@ -26,12 +26,12 @@ class KinematicsFromDescriptionTool:
         except KeyError:
             print(
                 (
-                    "Error: %s not found on the ROS parameter server. "
+                    "Error: `%s` not found on the ROS parameter server. "
                     "Check that it is loaded and under the right namespace."
                 )
                 % key
             )
-            exit()
+            exit(1)
 
     def load_desc_from_file(self, file_path):
         """

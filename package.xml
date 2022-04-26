@@ -1,27 +1,31 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>kinematics_from_description</name>
-  <version>0.0.2</version>
+  <version>1.0.0</version>
   <description>This package contains a simple Python program that calculates properties required to run parts of the <a href="https://github.com/NxRLab/ModernRobotics">Modern Robotics Library</a> from a robot's robot_description parameter.</description>
 
   <license>BSD</license>
 
-  <author email="luke@trossenrobotics.com">Luke Schmitt</author>
+  <author email="trsupport@trossenrobotics.com">Luke Schmitt</author>
   <maintainer email="trsupport@trossenrobotics.com">Luke Schmitt</maintainer>
 
-  <url type="website">https://github.com/LSinterbotix/kinematics_from_description</url>
-  <url type="bugtracker">https://github.com/LSinterbotix/kinematics_from_description/issues</url>
-  <url type="repository">https://github.com/LSinterbotix/kinematics_from_description</url>
+  <url type="website">https://github.com/Interbotix/kinematics_from_description</url>
+  <url type="bugtracker">https://github.com/Interbotix/kinematics_from_description/issues</url>
+  <url type="repository">https://github.com/Interbotix/kinematics_from_description</url>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <buildtool_depend>python3-setuptools</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION==2">python-setuptools</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION==3">python3-setuptools</buildtool_depend>
 
   <exec_depend>rospy</exec_depend>
   <exec_depend>urdfdom_py</exec_depend>
-  <exec_depend>python3-yaml</exec_depend>
-  <exec_depend>python3-numpy</exec_depend>
-  <exec_depend version_gte="1.4.0">python3-scipy</exec_depend>
-  
+  <exec_depend condition="$ROS_PYTHON_VERSION==2">python-yaml</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION==2">python-numpy</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION==2" version_gte="1.2.0">python-scipy</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION==3">python3-yaml</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION==3">python3-numpy</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION==3" version_gte="1.2.0">python3-scipy</exec_depend>
+
   <build_depend>rostest</build_depend>
 
 </package>
