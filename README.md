@@ -45,6 +45,7 @@ tool = KFD(
         body_frame: "body_frame",
         namespace: "namespace"
     }
+)
 tool.load_desc_from_file(filepath)
 tool.run()
 ```
